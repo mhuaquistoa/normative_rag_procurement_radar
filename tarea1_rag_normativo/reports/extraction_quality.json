@@ -1,0 +1,22 @@
+{
+  "ley_32069": {
+    "paginas": 63,
+    "paginas_conservadas": 63,
+    "paginas_descartadas": [],
+    "caracteres_raw": 220096,
+    "caracteres_limpios": 215353,
+    "R1_encabezados_quitados": 0,
+    "R1_caracteres": 0,
+    "R2_caracteres_de_otra_norma": 0
+  },
+  "ds_001_2026_ef": {
+    "paginas": 16,
+    "paginas_conservadas": 16,
+    "paginas_descartadas": [],
+    "caracteres_raw": 112477,
+    "caracteres_limpios": 103499,
+    "R1_encabezados_quitados": 16,
+    "R1_caracteres": 912,
+    "R2_caracteres_de_otra_norma": 6270
+  }
+}

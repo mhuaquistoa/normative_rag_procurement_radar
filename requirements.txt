@@ -1,0 +1,7 @@
+# Completed as phases land. PyTorch: install first (see README, Windows steps).
+pypdf
+pyyaml
+python-dotenv
+requests
+pandas
+tabulate
