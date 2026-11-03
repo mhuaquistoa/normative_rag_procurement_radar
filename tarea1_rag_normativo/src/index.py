@@ -44,7 +44,7 @@ def get_collection(embedder_key: str = None, chunking: str = None):
 
 def build(embedder_key: str, chunking: str, batch: int = 64) -> dict:
     c = cfg()["chunking"]["configs"][chunking]
-    chunks = chunk_all(c["size"], c["overlap"])
+    chunks = chunk_all(c["size"], c["overlap"], c.get("header", False))
     col = get_collection(embedder_key, chunking)
     stored = col.get(ids=[x["id"] for x in chunks], include=["metadatas"])
     have = {i: m["hash"] for i, m in zip(stored["ids"], stored["metadatas"])}
@@ -54,7 +54,7 @@ def build(embedder_key: str, chunking: str, batch: int = 64) -> dict:
     for i in range(0, len(todo), batch):
         part = todo[i:i + batch]
         col.upsert(ids=[x["id"] for x in part], documents=[x["texto"] for x in part],
-                   embeddings=emb.embed_documents([x["texto"] for x in part]),
+                   embeddings=emb.embed_documents([x["embed_text"] for x in part]),
                    metadatas=[{k: x[k] for k in META_KEYS} for x in part])
     seconds = time.perf_counter() - t0
     stale = []

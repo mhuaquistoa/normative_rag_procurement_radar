@@ -80,7 +80,8 @@ class GeminiEmbedder(Embedder):
                     if attempt == self.c["retries"] - 1:
                         raise
                     time.sleep(self.c["backoff_s"] * (attempt + 1))
-            time.sleep(self.c.get("pause_s", 0))
+            if i + self.c["batch_size"] < len(texts):  # pause between batches only, never after the last
+                time.sleep(self.c.get("pause_s", 0))
         return out
 
     def embed_documents(self, texts):

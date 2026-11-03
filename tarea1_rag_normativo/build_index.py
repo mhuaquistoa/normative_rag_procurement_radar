@@ -21,7 +21,8 @@ from index import build  # noqa: E402
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--embedder", default=cfg()["embeddings"]["active"], choices=["local", "api"])
+    embedders = [k for k, v in cfg()["embeddings"].items() if isinstance(v, dict)]
+    ap.add_argument("--embedder", default=cfg()["embeddings"]["active"], choices=embedders)
     ap.add_argument("--chunking", default=cfg()["chunking"]["active"])
     ap.add_argument("--skip-extract", action="store_true")
     a = ap.parse_args()

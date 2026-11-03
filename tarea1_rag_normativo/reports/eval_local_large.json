@@ -8,7 +8,7 @@
  "recall@1_mype": 0.2,
  "recall@3_mype": 0.4,
  "recall@5_mype": 0.6,
- "query_latency_ms": 28.1,
+ "query_latency_ms": 28.2,
  "in_domain_top1_sim_min": 0.8297,
  "out_domain_top1_sim_max": 0.868,
  "per_question": [
