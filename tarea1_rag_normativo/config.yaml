@@ -26,6 +26,7 @@ sources:
     pagina_oficial: "https://www.gob.pe/institucion/mef/normas-legales/7601483-001-2026-ef"
     url: "https://cdn.www.gob.pe/uploads/document/file/9263209/7601483-ds001_2026ef.pdf"
     file: ds_001_2026_ef.pdf
+    fin_norma: "2474920-3"      # El Peruano publication code that closes this norm (cleaning rule R2)
     nota: "busquedas.elperuano.pe/dispositivo/NL/2474920-3 refused connections (2026-11-03); same decree taken from the MEF page on gob.pe"
 
 source_check:
