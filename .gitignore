@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .vscode/
+tarea1_rag_normativo/data/index/

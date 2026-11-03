@@ -5,3 +5,8 @@ python-dotenv
 requests
 pandas
 tabulate
+sentence-transformers
+chromadb
+google-genai
+openai
+numpy

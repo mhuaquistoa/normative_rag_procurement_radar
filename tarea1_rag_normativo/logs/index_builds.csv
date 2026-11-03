@@ -1,0 +1,7 @@
+timestamp_utc,embedder,model,chunking,collection,fragments,embedded_now,skipped_unchanged,stale_deleted,embed_seconds,count_in_collection
+2026-11-03T22:58:44+00:00,local,intfloat/multilingual-e5-base,small,normas_local_small,629,629,0,0,4.67,629
+2026-11-03T22:58:48+00:00,local,intfloat/multilingual-e5-base,medium,normas_local_medium,351,351,0,0,4.08,351
+2026-11-03T22:58:52+00:00,local,intfloat/multilingual-e5-base,large,normas_local_large,245,245,0,0,4.44,245
+2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,small,normas_local_small,629,0,629,0,0.0,629
+2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,medium,normas_local_medium,351,0,351,0,0.0,351
+2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,large,normas_local_large,245,0,245,0,0.0,245
