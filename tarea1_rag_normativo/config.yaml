@@ -33,6 +33,51 @@ source_check:
   min_chars_per_page: 100     # below this a page counts as "without extractable text" (scan, image)
   min_reading_order: 0.95     # share of consecutive article headings in ascending order
 
+chunking:
+  active: medium            # chosen with the evaluation set (Phase 2 comparison), see README
+  configs:
+    small:  {size: 700,  overlap: 120}
+    medium: {size: 1200, overlap: 200}
+    large:  {size: 1800, overlap: 300}
+
+embeddings:
+  active: local             # local | api  - one interface, two implementations (src/embeddings.py)
+  local:
+    kind: sentence_transformers
+    model: intfloat/multilingual-e5-base
+    query_prefix: "query: "      # e5 models are trained with these prefixes (model card)
+    passage_prefix: "passage: "
+    device: cuda                 # null = let sentence-transformers choose (CPU on a laptop without GPU)
+    batch_size: 32
+  api:
+    kind: gemini
+    model: gemini-embedding-001
+    api_key_env: GEMINI_API_KEY
+    dimension: 768               # Matryoshka output; same dimension as the local model
+    max_tokens: 2048
+    batch_size: 50
+    retries: 4
+    backoff_s: 20
+    pause_s: 1
+
+index:
+  collection_prefix: normas   # one Chroma collection per (embedder, chunking config)
+  distance: cosine
+
+pricing:   # USD per 1M tokens. Verify again before reporting costs.
+  deepseek-flash:
+    source: https://api-docs.deepseek.com/quick_start/pricing
+    verified: "2026-11-03"
+    peak_hours_utc: {weekdays: [0, 1, 2, 3, 4], ranges: [[1, 4], [6, 10]]}   # Mon-Fri 01-04 and 06-10 UTC
+    peak:     {input: 0.30, input_cached: 0.006, output: 1.20}
+    off_peak: {input: 0.15, input_cached: 0.003, output: 0.60}
+    note: "Chinese public holidays are off-peak all day; not modelled (no call fell on one)."
+  gemini-embedding-001:
+    source: https://ai.google.dev/gemini-api/docs/pricing
+    verified: "2026-11-03"
+    flat: {input: 0.15}
+    note: "Paid tier price. The free tier is free of charge but its data may be used by Google."
+
 download:
   user_agent: "Mozilla/5.0 (course project; contact via GitHub)"
   timeout_s: 60

@@ -1,0 +1,4 @@
+embedder,model,chunking,recall@1,recall@3,recall@5,recall@1_mype,recall@3_mype,recall@5_mype,query_latency_ms,in_domain_top1_sim_min,out_domain_top1_sim_max
+local,intfloat/multilingual-e5-base,small,0.6,0.8,0.867,0.0,0.4,0.6,45.5,0.8319,0.8786
+local,intfloat/multilingual-e5-base,medium,0.733,0.867,0.867,0.2,0.6,0.6,24.5,0.8331,0.8582
+local,intfloat/multilingual-e5-base,large,0.667,0.8,0.867,0.2,0.4,0.6,28.1,0.8297,0.868
