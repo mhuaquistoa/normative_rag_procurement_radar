@@ -1,0 +1,176 @@
+{
+ "embedder": "local",
+ "model": "intfloat/multilingual-e5-base",
+ "chunking": "medium_ctx",
+ "recall@1": 0.667,
+ "recall@3": 0.8,
+ "recall@5": 0.867,
+ "recall@1_mype": 0.2,
+ "recall@3_mype": 0.4,
+ "recall@5_mype": 0.6,
+ "query_latency_ms": 29.0,
+ "in_domain_top1_sim_min": 0.8297,
+ "out_domain_top1_sim_max": 0.8594,
+ "per_question": [
+  {
+   "id": "q01",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8752,
+   "rank": 1,
+   "top1": "ley_32069:p32"
+  },
+  {
+   "id": "q02",
+   "en_dominio": true,
+   "estilo": "mype",
+   "top1_sim": 0.8387,
+   "rank": 2,
+   "top1": "ley_32069:p41"
+  },
+  {
+   "id": "q03",
+   "en_dominio": true,
+   "estilo": "mype",
+   "top1_sim": 0.8345,
+   "rank": 8,
+   "top1": "ds_001_2026_ef:p5"
+  },
+  {
+   "id": "q04",
+   "en_dominio": true,
+   "estilo": "mype",
+   "top1_sim": 0.8297,
+   "rank": 6,
+   "top1": "ley_32069:p51"
+  },
+  {
+   "id": "q05",
+   "en_dominio": true,
+   "estilo": "mype",
+   "top1_sim": 0.8338,
+   "rank": 4,
+   "top1": "ds_001_2026_ef:p4"
+  },
+  {
+   "id": "q06",
+   "en_dominio": true,
+   "estilo": "mype",
+   "top1_sim": 0.8364,
+   "rank": 1,
+   "top1": "ds_001_2026_ef:p14"
+  },
+  {
+   "id": "q07",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8935,
+   "rank": 1,
+   "top1": "ley_32069:p4"
+  },
+  {
+   "id": "q08",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8597,
+   "rank": 1,
+   "top1": "ley_32069:p21"
+  },
+  {
+   "id": "q09",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8725,
+   "rank": 1,
+   "top1": "ley_32069:p27"
+  },
+  {
+   "id": "q10",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8626,
+   "rank": 1,
+   "top1": "ley_32069:p25"
+  },
+  {
+   "id": "q11",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8868,
+   "rank": 1,
+   "top1": "ley_32069:p45"
+  },
+  {
+   "id": "q12",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8849,
+   "rank": 1,
+   "top1": "ley_32069:p28"
+  },
+  {
+   "id": "q13",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.892,
+   "rank": 1,
+   "top1": "ds_001_2026_ef:p9"
+  },
+  {
+   "id": "q14",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8879,
+   "rank": 1,
+   "top1": "ds_001_2026_ef:p10"
+  },
+  {
+   "id": "q15",
+   "en_dominio": true,
+   "estilo": "legal",
+   "top1_sim": 0.8557,
+   "rank": 2,
+   "top1": "ds_001_2026_ef:p15"
+  },
+  {
+   "id": "o01",
+   "en_dominio": false,
+   "estilo": "fuera",
+   "top1_sim": 0.7763,
+   "rank": null,
+   "top1": "ley_32069:p10"
+  },
+  {
+   "id": "o02",
+   "en_dominio": false,
+   "estilo": "fuera",
+   "top1_sim": 0.7952,
+   "rank": null,
+   "top1": "ley_32069:p36"
+  },
+  {
+   "id": "o03",
+   "en_dominio": false,
+   "estilo": "fuera",
+   "top1_sim": 0.8594,
+   "rank": null,
+   "top1": "ley_32069:p17"
+  },
+  {
+   "id": "o04",
+   "en_dominio": false,
+   "estilo": "fuera",
+   "top1_sim": 0.8357,
+   "rank": null,
+   "top1": "ds_001_2026_ef:p2"
+  },
+  {
+   "id": "o05",
+   "en_dominio": false,
+   "estilo": "fuera",
+   "top1_sim": 0.8226,
+   "rank": null,
+   "top1": "ley_32069:p48"
+  }
+ ]
+}

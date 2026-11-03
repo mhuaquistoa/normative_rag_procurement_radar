@@ -48,7 +48,17 @@ def _tail(text: str, overlap: int) -> str:
     return keep
 
 
-def chunk_document(source: dict, size: int, overlap: int) -> list:
+def embed_input(chunk: dict, source: dict, header: bool) -> str:
+    """What the embedding model reads. With `header`, the fragment is prefixed with its norm and article
+    ("Ley 32069 · Artículo 29. Requisitos para ser proveedor"): a fragment from the middle of an article
+    otherwise loses the article title, which is often the only place the topic is named."""
+    if not header:
+        return chunk["texto"]
+    art = f" · Artículo {chunk['articulo']}" if chunk["articulo"] else ""
+    return f"{source['corto']}{art}\n{chunk['texto']}"
+
+
+def chunk_document(source: dict, size: int, overlap: int, header: bool = False) -> list:
     chunks, article = [], None
     for page in load_pages(source["id"]):
         paragraphs = [p.strip() for p in page["texto"].split("\n") if p.strip()]
@@ -72,17 +82,19 @@ def chunk_document(source: dict, size: int, overlap: int) -> list:
             # with one, else the last heading seen before it (possibly on an earlier page)
             current = arts[0] if arts and ARTICLE.match(text) else article
             article = arts[-1] if arts else article
-            chunks.append({
-                "id": f"{source['id']}:p{page['pagina']}:c{n}",
-                "texto": text,
-                "documento": source["id"], "titulo": source["titulo"], "tipo": source["tipo"],
-                "version": source["version"], "fecha_version": source["fecha_version"],
-                "pagina": page["pagina"], "pagina_diario": page["pagina_diario"] or 0,
-                "articulo": current or "", "articulos_en_fragmento": "; ".join(arts),
-                "ambito": "reglamento" if source["tipo"] == "decreto_modificatorio" else "ley",
-                "chars": len(text), "hash": hashlib.sha1(text.encode("utf-8")).hexdigest()[:12]})
+            c = {"id": f"{source['id']}:p{page['pagina']}:c{n}",
+                 "texto": text,
+                 "documento": source["id"], "titulo": source["titulo"], "tipo": source["tipo"],
+                 "version": source["version"], "fecha_version": source["fecha_version"],
+                 "pagina": page["pagina"], "pagina_diario": page["pagina_diario"] or 0,
+                 "articulo": current or "", "articulos_en_fragmento": "; ".join(arts),
+                 "ambito": "reglamento" if source["tipo"] == "decreto_modificatorio" else "ley",
+                 "chars": len(text)}
+            c["embed_text"] = embed_input(c, source, header)
+            c["hash"] = hashlib.sha1(c["embed_text"].encode("utf-8")).hexdigest()[:12]  # what was embedded
+            chunks.append(c)
     return chunks
 
 
-def chunk_all(size: int, overlap: int) -> list:
-    return [c for s in sources() for c in chunk_document(s, size, overlap)]
+def chunk_all(size: int, overlap: int, header: bool = False) -> list:
+    return [c for s in sources() for c in chunk_document(s, size, overlap, header)]

@@ -5,3 +5,12 @@ timestamp_utc,embedder,model,chunking,collection,fragments,embedded_now,skipped_
 2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,small,normas_local_small,629,0,629,0,0.0,629
 2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,medium,normas_local_medium,351,0,351,0,0.0,351
 2026-11-03T22:58:55+00:00,local,intfloat/multilingual-e5-base,large,normas_local_large,245,0,245,0,0.0,245
+2026-11-03T23:00:49+00:00,local,intfloat/multilingual-e5-base,small,normas_local_small,629,0,629,0,0.0,629
+2026-11-03T23:00:49+00:00,local,intfloat/multilingual-e5-base,medium,normas_local_medium,351,0,351,0,0.0,351
+2026-11-03T23:00:50+00:00,local,intfloat/multilingual-e5-base,large,normas_local_large,245,0,245,0,0.0,245
+2026-11-03T23:01:09+00:00,local,intfloat/multilingual-e5-base,medium_ctx,normas_local_medium_ctx,351,351,0,0,4.66,351
+2026-11-03T23:01:15+00:00,local,intfloat/multilingual-e5-base,small_ctx,normas_local_small_ctx,629,629,0,0,5.39,629
+2026-11-03T23:03:35+00:00,local_large,intfloat/multilingual-e5-large,medium,normas_local_large_medium,351,351,0,0,11.01,351
+2026-11-03T23:04:08+00:00,local_large,intfloat/multilingual-e5-large,small_ctx,normas_local_large_small_ctx,629,629,0,0,14.23,629
+2026-11-03T23:04:39+00:00,local_large,intfloat/multilingual-e5-large,medium_ctx,normas_local_large_medium_ctx,351,351,0,0,12.57,351
+2026-11-03T23:11:10+00:00,api,gemini-embedding-001,medium_ctx,normas_api_medium_ctx,351,351,0,0,281.31,351

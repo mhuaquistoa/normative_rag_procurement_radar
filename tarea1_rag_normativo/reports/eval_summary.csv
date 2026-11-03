@@ -1,4 +1,10 @@
 embedder,model,chunking,recall@1,recall@3,recall@5,recall@1_mype,recall@3_mype,recall@5_mype,query_latency_ms,in_domain_top1_sim_min,out_domain_top1_sim_max
-local,intfloat/multilingual-e5-base,small,0.6,0.8,0.867,0.0,0.4,0.6,45.5,0.8319,0.8786
-local,intfloat/multilingual-e5-base,medium,0.733,0.867,0.867,0.2,0.6,0.6,24.5,0.8331,0.8582
-local,intfloat/multilingual-e5-base,large,0.667,0.8,0.867,0.2,0.4,0.6,28.1,0.8297,0.868
+local,intfloat/multilingual-e5-base,small,0.6,0.8,0.867,0.0,0.4,0.6,45.1,0.8319,0.8786
+local,intfloat/multilingual-e5-base,medium,0.733,0.867,0.867,0.2,0.6,0.6,29.6,0.8331,0.8582
+local,intfloat/multilingual-e5-base,large,0.667,0.8,0.867,0.2,0.4,0.6,28.2,0.8297,0.868
+local,intfloat/multilingual-e5-base,medium_ctx,0.667,0.8,0.867,0.2,0.4,0.6,29.0,0.8297,0.8594
+local,intfloat/multilingual-e5-base,small_ctx,0.8,0.867,0.867,0.4,0.6,0.6,25.8,0.8363,0.8824
+local_large,intfloat/multilingual-e5-large,medium,0.8,0.867,0.933,0.4,0.6,0.8,51.8,0.8229,0.8575
+local_large,intfloat/multilingual-e5-large,small_ctx,0.8,0.867,1.0,0.4,0.6,1.0,53.6,0.837,0.874
+local_large,intfloat/multilingual-e5-large,medium_ctx,0.8,0.933,1.0,0.4,0.8,1.0,50.6,0.8281,0.863
+api,gemini-embedding-001,medium_ctx,0.867,0.933,0.933,0.6,0.8,0.8,639.8,0.6942,0.7376
