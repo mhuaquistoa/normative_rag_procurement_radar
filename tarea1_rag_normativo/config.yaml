@@ -1,0 +1,37 @@
+# Task 1 - Normative RAG. Every path, model, size, threshold, prompt and message lives here.
+paths:
+  raw: data/raw                 # original PDFs, never modified
+  processed: data/processed     # extracted text, one record per page
+  index: data/index             # persistent vector store
+  logs: logs
+  reports: reports
+
+sources:
+  - id: ley_32069
+    titulo: "Ley N.° 32069, Ley General de Contrataciones Públicas"
+    tipo: ley
+    emisor: "Congreso de la República (texto publicado por OECE en gob.pe)"
+    version: "Texto con modificaciones posteriores hasta el 19-07-2026"
+    fecha_version: "2026-07-19"
+    pagina_oficial: "https://www.gob.pe/institucion/osce/colecciones/45029-ley-n-32069-ley-general-de-contrataciones-publicas"
+    url: "https://cdn.www.gob.pe/uploads/document/file/9295551/6444155-ley-general-de-contrataciones-publicas-con-modificaciones-posteriores-hasta-el-19-07-2026.pdf"
+    file: ley_32069_hasta_2026-07-19.pdf
+  - id: ds_001_2026_ef
+    titulo: "Decreto Supremo N.° 001-2026-EF, que modifica el Reglamento de la Ley N.° 32069"
+    tipo: decreto_modificatorio
+    emisor: "Ministerio de Economía y Finanzas"
+    modifica: "Reglamento de la Ley N.° 32069 (aprobado por DS N.° 009-2025-EF)"
+    version: "Publicado el 2026-01-08"
+    fecha_version: "2026-01-08"
+    pagina_oficial: "https://www.gob.pe/institucion/mef/normas-legales/7601483-001-2026-ef"
+    url: "https://cdn.www.gob.pe/uploads/document/file/9263209/7601483-ds001_2026ef.pdf"
+    file: ds_001_2026_ef.pdf
+    nota: "busquedas.elperuano.pe/dispositivo/NL/2474920-3 refused connections (2026-11-03); same decree taken from the MEF page on gob.pe"
+
+source_check:
+  min_chars_per_page: 100     # below this a page counts as "without extractable text" (scan, image)
+  min_reading_order: 0.95     # share of consecutive article headings in ascending order
+
+download:
+  user_agent: "Mozilla/5.0 (course project; contact via GitHub)"
+  timeout_s: 60

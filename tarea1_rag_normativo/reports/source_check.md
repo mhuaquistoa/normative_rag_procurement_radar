@@ -1,0 +1,4 @@
+| documento      |   paginas |   caracteres |   caracteres_por_pagina_mediana |   caracteres_por_pagina_min |   caracteres_por_pagina_max |   paginas_sin_texto |   titulos_de_articulo |   orden_de_lectura | utilizable_tal_cual   |
+|:---------------|----------:|-------------:|--------------------------------:|----------------------------:|----------------------------:|--------------------:|----------------------:|-------------------:|:----------------------|
+| ley_32069      |        63 |       220096 |                            3551 |                        1238 |                        4273 |                   0 |                   101 |              0.99  | sí                    |
+| ds_001_2026_ef |        16 |       112477 |                            6977 |                        6444 |                        8033 |                   0 |                   118 |              0.974 | sí                    |
