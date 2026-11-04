@@ -1,0 +1,21 @@
+{
+ "hibrido": {
+  "hit@1": 0.8,
+  "hit@5": 0.9,
+  "hit@10": 0.9,
+  "precision@1": 0.8,
+  "precision@5": 0.74,
+  "precision@10": 0.72
+ },
+ "solo_semantico": {
+  "hit@1": 0.5,
+  "hit@5": 0.8,
+  "hit@10": 0.9,
+  "precision@1": 0.5,
+  "precision@5": 0.26,
+  "precision@10": 0.26
+ },
+ "top1_en_dominio_min": 0.8395,
+ "top1_fuera_max": 0.8307,
+ "umbral_tarea1": 0.835
+}

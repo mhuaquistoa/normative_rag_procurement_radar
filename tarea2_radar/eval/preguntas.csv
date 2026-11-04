@@ -1,0 +1,14 @@
+id,en_dominio,pregunta,departamento,categoria,monto_min,patron
+r01,1,obras de agua y saneamiento en Cusco por más de un millón de soles,CUSCO,Obras,1000000,AGUA|SANEAMIENTO|ALCANTARILLAD|DESAGUE
+r02,1,adquisición de medicamentos en Lima,LIMA,,,MEDICAMENT|FARMAC
+r03,1,servicios de limpieza en Arequipa,AREQUIPA,Servicios,,LIMPIEZA
+r04,1,compra de combustible en Puno,PUNO,,,COMBUSTIBLE|PETROLEO|DIESEL|GASOLINA|GASOHOL
+r05,1,obras de pistas y veredas en La Libertad,LA LIBERTAD,Obras,,PISTA|VEREDA|PAVIMENT
+r06,1,alimentos para programas sociales en Ayacucho,AYACUCHO,,,ALIMENT|VIVERES|VASO DE LECHE|COMPLEMENTACION
+r07,1,computadoras y equipos informáticos en Junín,JUNIN,,,COMPUTADOR|INFORMATIC|LAPTOP|IMPRESORA|COMPUTO
+r08,1,consultoría para elaborar expedientes técnicos en Cajamarca,CAJAMARCA,,,EXPEDIENTE TECNICO
+r09,1,mantenimiento de caminos vecinales en Áncash,ANCASH,,,MANTENIMIENTO.*(?:CAMINO|CARRETER|VIA|VIAL|TROCHA)
+r10,1,uniformes y vestuario en Piura,PIURA,,,UNIFORME|VESTUARIO|PRENDA|INDUMENTARIA
+x01,0,¿Cómo preparo un ceviche?,,,,
+x02,0,¿Cuál es el plazo para apelar el otorgamiento de la buena pro?,,,,
+x03,0,compra de naves espaciales tripuladas en Tumbes,,,,
