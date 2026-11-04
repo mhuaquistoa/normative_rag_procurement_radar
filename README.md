@@ -5,7 +5,10 @@ Two connected tools for a Peruvian small business (MYPE) that wants to sell to t
 - **Task 1 — Normative RAG** (`tarea1_rag_normativo/`): answers "what does the law say?" only from the
   official texts, cites document and page, and abstains when the answer is not in the corpus.
 - **Task 2 — Procurement Radar** (`tarea2_radar/`): "what is the State buying, and where?" over OECE
-  open contracting data. *(in progress)*
+  open contracting data: 19,956 processes (Aug–Oct 2026), validated, mapped to the 25 departments,
+  searchable in natural language with exact filters, and a single-bidder red flag.
+
+Pipeline diagrams of both tasks: [`docs/pipeline.md`](docs/pipeline.md).
 
 Video: *(link added when recorded)*
 
@@ -239,4 +242,161 @@ streamlit run app.py
 
 ## Task 2 · Procurement Radar
 
-*(in progress)*
+**Headline.** 238,859 release-level rows become **19,956 contracting processes** (one per ocid,
+S/ 25,032 M with a published amount) from three monthly OECE files. Applying place, amount, category and
+month as **exact filters** before the semantic search raises precision@5 from **0.26 to 0.74**
+on 10 rule-defined questions. The Task 1 threshold does **not** transfer (0.82 lets 2 of 3
+out-of-domain questions through) and is recalibrated to 0.835. Single-bidder awards are **15.1 %**
+over all methods but **1.85 %** over competitive ones: direct contracting and special regimes are
+one-supplier by design, so the raw indicator mostly measures each buyer's mix of methods.
+
+### Pipeline
+
+```mermaid
+flowchart LR
+  subgraph OFFLINE["Offline · build_index.py"]
+    A[OECE bulk files<br/>monthly OCDS JSON<br/>2026-08..10] --> B[sha check<br/>skip if present]
+    API[OECE API /releases<br/>recent updates only<br/>throttle · retry · cache] -.-> B
+    B --> C[records → 1 row per ocid<br/>from compiledRelease]
+    C --> D[Validation V1-V5<br/>duplicates · amount · description<br/>province vs department · accents]
+    D --> E[(procesos.parquet<br/>+ quality report)]
+    E --> F[Local embeddings of descriptions<br/>same e5-large as Task 1]
+    F --> G[(ChromaDB<br/>vector = description<br/>metadata = departamento · monto ·<br/>fecha · categoria · comprador · ocid)]
+    E --> H[Risk + aggregates<br/>data/outputs/*.csv]
+  end
+  subgraph ONLINE["Online · radar_engine.responder(pregunta)"]
+    Q[Question] --> P[Rule parser]
+    P -->|departamento · monto · categoría · mes| W[Exact filters 'where']
+    P -->|remaining topic| S[Semantic query]
+    W & S --> R[Top-8 inside the filters]
+    G -.-> R
+    R --> T{best ≥ 0.835?}
+    T -- no --> X[Abstain · no LLM]
+    T -- yes --> L[DeepSeek · cites every process by ocid]
+  end
+  E & H & G --> DASH[Streamlit dashboard<br/>KPIs · map · question box ·<br/>table · distribution · risk · quality]
+  L --> DASH
+```
+
+### Phase 1 · Acquisition
+
+| Access | Used for | How |
+|---|---|---|
+| Bulk monthly files (`/api/v1/file/seace_v3/json/2026/MM/`) | the corpus | one request per month; re-runs fetch nothing if the file's integrity check passes |
+| Paginated API (`/api/v1/releases?page=N`) | recent updates only | throttled (1 s), 4 retries with backoff, each page cached to disk so a failure keeps earlier pages |
+
+Finding: the published `.sha` is the sha256 of the **JSON inside the ZIP**, not of the ZIP; checking the ZIP
+reported false mismatches on every month. Logged in `logs/acquisition.csv` (time, requests, bytes):
+
+| Month | ZIP size | Records |
+|---|---|---|
+| 2026-08 | 10.3 MB | 6,706 |
+| 2026-09 | 8.9 MB | 6,716 |
+| 2026-10 | 6.0 MB | 6,534 |
+
+**OCDS.** A *release* is one publication about a process at a moment (planning, tender, award, contract);
+a *record* gathers all releases of one process plus a `compiledRelease`, its merged current state; the
+**ocid** identifies the contracting process across all of them. Building the table from releases gives
+**238,859 rows**; one row per ocid gives **19,956**. No ocid repeats across the three files (each file holds
+each process once); the rule "latest compiledRelease wins" is in place for when it does. The API returns
+releases, which is why it serves updates and the bulk records serve the corpus.
+
+### Phase 2 · Validation and territorial normalization
+
+| Rule | Flagged | Action |
+|---|---|---|
+| V1 repeated records | 238,859 release rows → 19,956 processes; 0 ocid repeated across files | one row per ocid (latest wins) |
+| V2 missing / zero amount | 4,840 (24 %) | **212 recovered** (110 from awards, 102 from items; recovery rate 4.4 %); 4,628 kept with `flag_monto`, excluded from amount sums; 265 non-PEN amounts converted with the publisher's `amount_PEN` |
+| V3 no description | 0 | rule kept: fallback to items / budget project / title, else flagged and not indexed |
+| V4 location not a department | **11,035** buyers carry a **province** in `region` (196 distinct values) | department from `department` (all 25 incl. Callao valid); a province→department table built from the data recovers it when missing; **0 processes unlocated** |
+| V5 accents / encoding | 2 texts with mojibake; no accent variants in department names in this JSON release | all matching on a folded key (no accents, upper case: JUNÍN = JUNIN); display names with accents |
+
+Full report: `tarea2_radar/reports/data_quality.md` (also in the dashboard). Note: the JSON release of
+these months was cleaner than the course's warning anticipated for department names; the province/department
+mix is real and large.
+
+### Phase 3 · Hybrid RAG
+
+- Descriptions embedded with **the same model as Task 1**, imported from Task 1's `embeddings` module
+  (`src/shared.py`), as are its LLM client and cost log.
+- **Why numbers and places are filters, not embeddings.** "Above one million soles in Cusco" is a set
+  condition with a yes/no answer. An embedding places 900,000 and 1,200,000, or Cusco and Puno, close to each
+  other because they *look* alike; it ranks, it does not include or exclude. A rule parser (`query_parser.py`)
+  extracts department(s), category, amount ranges ("más de un millón", "entre 100 mil y 500 mil",
+  "2.5 millones") and months, applies them as a Chroma `where`, and only the remaining topic is searched
+  semantically. Processes without a published amount never pass an amount filter.
+- Evaluation (`eval/evaluate.py`, 10 questions; relevance = rule on department, category, amount and a
+  keyword pattern, so it is reproducible):
+
+| Mode | hit@1 | hit@5 | precision@1 | precision@5 | precision@10 |
+|---|---|---|---|---|---|
+| **Hybrid (filters + semantic)** | **0.80** | **0.90** | **0.80** | **0.74** | **0.72** |
+| Semantic only | 0.50 | 0.80 | 0.50 | 0.26 | 0.26 |
+
+  Misses: "computers in Junín" (only 2 relevant processes exist) and "consultancy for technical files in
+  Cajamarca" (relevant ones rank 6–10).
+- **Threshold transfer.** In-domain top-1 minimum 0.840, out-of-domain maximum 0.831 ("manned spacecraft in
+  Tumbes"); Task 1's 0.82 would let the appeal-deadline and spacecraft questions through. Recalibrated to
+  **0.835**. Similarities depend on the corpus (short tender descriptions vs legal paragraphs), so a threshold
+  is a property of model *and* corpus.
+- Answers cite every process by **ocid**; citations not in the retrieved set are rejected.
+
+### Phase 4 · Dashboard
+
+`tarea2_radar/app.py` reads only precomputed files (`@st.cache_data` for tables, `@st.cache_resource` for the
+model): KPI header (processes, amount, departments, single-bidder share — all follow the filters),
+choropleth by processes or amount with tooltips, question box, sortable table with CSV download,
+distribution by month × category and by department, risk tab, data-quality tab. Sidebar filters: department,
+category, amount range, date range, similarity threshold. An empty selection shows a message instead of failing.
+
+### Phase 5 · Single-bidder awards (red flag)
+
+> A red flag is a reason to look closer, not evidence of wrongdoing. Only public entities are ranked; no
+> supplier or person is named. References: Open Contracting Partnership, *Red Flags in Public Procurement*
+> (2024); Ojo Público, *Funes*.
+
+- Share = awarded processes with exactly one tenderer / awarded processes with a published tenderer count.
+- **Methods matter more than buyers.** Direct contracting 85.8 %, special regime 80.3 %, international 99.4 %
+  single-bidder — by design — against 0.0–1.8 % in competitive methods. The main indicator therefore excludes
+  non-competitive methods (`risk.non_competitive_methods`); the raw one is kept as a toggle.
+- National: **1.85 %** (175 / 9,450) competitive vs 15.1 % (1,706 / 11,316) all methods.
+- Buyers are ranked only with **≥ 10** awarded processes with a tenderer count (below that one case swings the
+  share: 1 of 2 = 50 %), each with a 95 % Wilson interval. 202 buyers qualify.
+- The clear outlier is **Petróleos del Perú: 71 / 97 (73 %, CI 64–82 %)**, all 65 of its "Adjudicación
+  Abreviada" processes under its own procurement regime had one bidder. Whether that method is competitive by
+  design is exactly what the flag says to check.
+
+### Run it (Windows)
+
+Same environment as Task 1 (see above), then:
+
+```bat
+cd tarea2_radar
+python src\acquire.py            & rem 3 monthly files (skips verified ones); add --api 3 for recent releases
+python build_index.py            & rem one row per process, validation, index (~4 min on an RTX 5050), risk tables
+python eval\evaluate.py          & rem hybrid vs semantic-only, threshold transfer (no LLM)
+streamlit run app.py
+```
+
+## Cost (both tasks)
+
+All real calls are in `tarea1_rag_normativo/logs/calls.csv` (Task 2 uses the same LLM client and log).
+
+| Item | Calls | USD |
+|---|---|---|
+| DeepSeek generation (both tasks, development + evaluations) | 25, all off-peak | 0.0079 |
+| Gemini embeddings (Task 1 comparison index + queries) | 51 ok, 9 rate-limited | 0.014 at paid-tier price (free tier: 0) |
+| Local embeddings (both indexes, all queries) | — | 0 |
+
+A typical question costs **≈ USD 0.0003** (Task 1) to **0.0005** (Task 2, longer context) off-peak, twice that
+in DeepSeek peak hours; a question stopped by the threshold costs 0.
+
+## Limitations
+
+- Task 1: 20 evaluation questions (one question = 0.067 of recall); the Reglamento is not indexed, so many
+  practical questions get a correct "it's in the Reglamento" rather than an answer; article 30's list of
+  impediments lives in an external PDF; one valid MYPE question is wrongly abstained by the LLM.
+- Task 2: three months only; amounts missing for 23 % of processes; the tender count may not be published for
+  every awarded process; relevance in the evaluation is rule-based (keywords), which under-counts synonyms.
+- The API embedding comparison uses Gemini because the course's OpenAI key was revoked.
+- Thresholds were calibrated on small sets and must be recalibrated when the model or corpus changes.
