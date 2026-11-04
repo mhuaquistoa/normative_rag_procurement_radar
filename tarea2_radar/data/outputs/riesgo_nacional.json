@@ -1,0 +1,14 @@
+{
+ "minimo":10,
+ "compradores_elegibles":202,
+ "competitivos":{
+  "adjudicados_con_postores":9450,
+  "un_solo_postor":175,
+  "proporcion":0.0185
+ },
+ "todos_los_metodos":{
+  "adjudicados_con_postores":11316,
+  "un_solo_postor":1706,
+  "proporcion":0.1508
+ }
+}

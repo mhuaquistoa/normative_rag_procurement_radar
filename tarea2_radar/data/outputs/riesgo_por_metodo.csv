@@ -1,0 +1,20 @@
+metodo,adjudicados_con_postores,un_solo_postor,adjudicados_sin_dato_postores,proporcion_un_solo_postor,ic95_bajo,ic95_alto
+Adjudicación Abreviada,65,65,0,1.0,0.9442,1.0
+Adjudicación Selectiva,32,6,0,0.1875,0.0889,0.3531
+Adjudicación Simplificada,7,0,0,0.0,0.0,0.3543
+Comparación de Precios,1077,0,0,0.0,0.0,0.0036
+Concurso Público Abreviado,2820,33,0,0.0117,0.0083,0.0164
+Concurso Público Abreviado Homologación,6,1,0,0.1667,0.0301,0.5635
+Concurso Público Abreviado Séptima DCF Ley N°32069,1,0,0,0.0,0.0,0.7935
+Concurso Público de Servicios,203,3,0,0.0148,0.005,0.0425
+Concurso Público para Consultoría,72,0,0,0.0,0.0,0.0507
+Contratación Directa,1232,1057,1,0.858,0.8373,0.8763
+Contratación Internacional,177,176,0,0.9944,0.9687,0.999
+Convenio,224,111,0,0.4955,0.4307,0.5605
+Licitación Pública,332,0,0,0.0,0.0,0.0114
+Licitación Pública Abreviada,3527,65,0,0.0184,0.0145,0.0234
+Licitación Pública Abreviada Homologación,23,0,0,0.0,-0.0,0.1431
+Procedimiento Especial de Contratación,12,0,0,0.0,0.0,0.2425
+Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto,1,0,0,0.0,0.0,0.7935
+Regímen Especial,233,187,0,0.8026,0.7467,0.8486
+Subasta Inversa Electrónica,1272,2,0,0.0016,0.0004,0.0057

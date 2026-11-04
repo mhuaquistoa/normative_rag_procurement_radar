@@ -1,0 +1,27 @@
+id,en_dominio,modo,candidatos,top1_sim,filtros,relevantes_en_corpus,hit@1,precision@1,hit@5,precision@5,hit@10,precision@10
+r01,True,hibrido,45,0.8759,"{""departamentos"": [""CUSCO""], ""categoria"": ""Obras"", ""monto_min"": 1000000.0}",15.0,1.0,1.0,1.0,1.0,1.0,1.0
+r01,True,solo_semantico,45,0.8671,"{""departamentos"": [""CUSCO""], ""categoria"": ""Obras"", ""monto_min"": 1000000.0}",15.0,1.0,1.0,1.0,0.2,1.0,0.2
+r02,True,hibrido,5224,0.8912,"{""departamentos"": [""LIMA""]}",193.0,1.0,1.0,1.0,0.6,1.0,0.5
+r02,True,solo_semantico,5224,0.8759,"{""departamentos"": [""LIMA""]}",193.0,1.0,1.0,1.0,0.4,1.0,0.2
+r03,True,hibrido,374,0.8627,"{""departamentos"": [""AREQUIPA""], ""categoria"": ""Servicios""}",7.0,1.0,1.0,1.0,1.0,1.0,0.6
+r03,True,solo_semantico,374,0.885,"{""departamentos"": [""AREQUIPA""], ""categoria"": ""Servicios""}",7.0,1.0,1.0,1.0,0.4,1.0,0.3
+r04,True,hibrido,1159,0.8716,"{""departamentos"": [""PUNO""]}",114.0,1.0,1.0,1.0,1.0,1.0,1.0
+r04,True,solo_semantico,1159,0.8747,"{""departamentos"": [""PUNO""]}",114.0,0.0,0.0,1.0,0.6,1.0,0.8
+r05,True,hibrido,255,0.8698,"{""departamentos"": [""LA LIBERTAD""], ""categoria"": ""Obras""}",15.0,1.0,1.0,1.0,1.0,1.0,1.0
+r05,True,solo_semantico,255,0.8647,"{""departamentos"": [""LA LIBERTAD""], ""categoria"": ""Obras""}",15.0,0.0,0.0,1.0,0.2,1.0,0.3
+r06,True,hibrido,623,0.8395,"{""departamentos"": [""AYACUCHO""]}",18.0,1.0,1.0,1.0,1.0,1.0,1.0
+r06,True,solo_semantico,623,0.8699,"{""departamentos"": [""AYACUCHO""]}",18.0,1.0,1.0,1.0,0.4,1.0,0.2
+r07,True,hibrido,924,0.8505,"{""departamentos"": [""JUNIN""]}",2.0,0.0,0.0,0.0,0.0,0.0,0.0
+r07,True,solo_semantico,924,0.8622,"{""departamentos"": [""JUNIN""]}",2.0,0.0,0.0,0.0,0.0,0.0,0.0
+r08,True,hibrido,358,0.8445,"{""departamentos"": [""CAJAMARCA""], ""categoria"": ""Servicios""}",19.0,0.0,0.0,1.0,0.2,1.0,0.6
+r08,True,solo_semantico,358,0.8591,"{""departamentos"": [""CAJAMARCA""], ""categoria"": ""Servicios""}",19.0,0.0,0.0,0.0,0.0,1.0,0.2
+r09,True,hibrido,1510,0.8585,"{""departamentos"": [""ANCASH""]}",34.0,1.0,1.0,1.0,0.6,1.0,0.5
+r09,True,solo_semantico,1510,0.8622,"{""departamentos"": [""ANCASH""]}",34.0,0.0,0.0,1.0,0.2,1.0,0.3
+r10,True,hibrido,520,0.8493,"{""departamentos"": [""PIURA""]}",19.0,1.0,1.0,1.0,1.0,1.0,1.0
+r10,True,solo_semantico,520,0.8619,"{""departamentos"": [""PIURA""]}",19.0,1.0,1.0,1.0,0.2,1.0,0.1
+x01,False,hibrido,19956,0.8189,{},,,,,,,
+x01,False,solo_semantico,19956,0.8027,{},,,,,,,
+x02,False,hibrido,19956,0.8239,{},,,,,,,
+x02,False,solo_semantico,19956,0.7999,{},,,,,,,
+x03,False,hibrido,97,0.8307,"{""departamentos"": [""TUMBES""]}",,,,,,,
+x03,False,solo_semantico,97,0.8525,"{""departamentos"": [""TUMBES""]}",,,,,,,

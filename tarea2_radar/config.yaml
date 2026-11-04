@@ -19,5 +19,51 @@ oece:
   retries: 4
   backoff_s: 5
 
+index:
+  collection: procesos
+  embedder: local_large       # the Task 1 embeddings config key: same local model, same prefixes
+  max_chars: 1500
+
+engine:
+  top_k: 8
+  threshold: 0.835            # recalibrated: Task 1 value 0.82 let 2 of 3 out-of-domain questions through (reports/eval_radar.json)
+
+prompts:
+  system: |
+    Eres un asistente que ayuda a una micro o pequeña empresa del Perú a encontrar procesos de
+    contratación pública. Respondes SOLO con los procesos que te doy, cada uno identificado por su
+    ocid entre corchetes. No inventes procesos, montos ni fechas.
+    Reglas:
+    1. Menciona cada proceso que uses con su ocid exacto entre corchetes, por ejemplo [ocds-dgv273-seacev3-123].
+    2. Usa solo los procesos que realmente responden a la pregunta; ignora los que no tienen relación.
+    3. Si ninguno de los procesos responde a la pregunta, abstente.
+    4. Resume en 2 a 5 oraciones: qué se compra, dónde, por cuánto y quién compra.
+    Responde solo en json:
+    {"abstener": false, "respuesta": "texto con [ocid]", "citas": ["ocid1", "ocid2"]}
+    o {"abstener": true, "respuesta": "", "citas": []}
+  user: |
+    Pregunta: {pregunta}
+    Filtros aplicados (exactos): {filtros}
+    Procesos que cumplen los filtros: {n}
+    Procesos más parecidos a la pregunta:
+
+    {contexto}
+
+messages:
+  empty_question: "Escribe una pregunta."
+  no_results: "Ningún proceso cumple los filtros de tu pregunta (departamento, monto, categoría o fecha) en los meses descargados."
+  abstain_threshold: "Encontré procesos que cumplen los filtros, pero ninguno se parece lo suficiente a lo que buscas, así que no voy a forzar una respuesta."
+  abstain_out_of_corpus: "Los procesos encontrados no responden a tu pregunta."
+  abstain_no_citations: "El modelo respondió sin citar ningún ocid; por seguridad no muestro la respuesta."
+  retrieval_error: "No se pudo consultar el índice. ¿Ejecutaste build_index.py?"
+  llm_error: "Error al llamar al modelo de lenguaje"
+
+risk:
+  min_awarded: 10             # buyers need >= 10 awarded processes with a published bidder count
+  # Methods that are non-competitive by design: one supplier is the expected outcome, not a red flag
+  # (single-bidder share 0.80-0.99 in them vs 0.00-0.02 in competitive methods). The main indicator
+  # excludes them; the raw indicator over all methods is kept for comparison.
+  non_competitive_methods: ["Contratación Directa", "Regímen Especial", "Contratación Internacional", "Convenio"]
+
 territory:
   departments_geojson_url: https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson
