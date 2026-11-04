@@ -80,3 +80,4 @@ timestamp_utc,kind,model,tokens_in,tokens_cached,tokens_out,latency_s,price_wind
 2026-11-04T00:29:33+00:00,generation,deepseek-flash,2119,1920,30,0.802,off_peak,5.361e-05,True,
 2026-11-04T00:29:34+00:00,generation,deepseek-flash,1767,256,30,0.964,off_peak,0.00024542,True,
 2026-11-04T00:29:35+00:00,generation,deepseek-flash,2165,256,27,1.04,off_peak,0.00030332,True,
+2026-11-04T00:31:00+00:00,generation,deepseek-flash,1844,1664,173,1.858,off_peak,0.00013579,True,

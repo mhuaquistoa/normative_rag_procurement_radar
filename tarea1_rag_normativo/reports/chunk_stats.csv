@@ -1,0 +1,11 @@
+config,size,overlap,header,documento,fragmentos,chars_p10,chars_mediana,chars_p90,chars_max
+small,700,120,False,ds_001_2026_ef,205,317,559,692,772
+small,700,120,False,ley_32069,424,299,562,680,777
+medium,1200,200,False,ds_001_2026_ef,114,685,1001,1183,1239
+medium,1200,200,False,ley_32069,237,532,1032,1180,1200
+large,1800,300,False,ds_001_2026_ef,78,755,1615,1765,1789
+large,1800,300,False,ley_32069,167,613,1569,1771,1800
+medium_ctx,1200,200,True,ds_001_2026_ef,114,685,1001,1183,1239
+medium_ctx,1200,200,True,ley_32069,237,532,1032,1180,1200
+small_ctx,700,120,True,ds_001_2026_ef,205,317,559,692,772
+small_ctx,700,120,True,ley_32069,424,299,562,680,777
