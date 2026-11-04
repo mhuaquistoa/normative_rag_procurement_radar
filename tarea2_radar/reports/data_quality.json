@@ -1,0 +1,43 @@
+{
+  "V1_duplicados": {
+    "filas_si_se_usan_releases": 238859,
+    "records_en_archivos": 19956,
+    "procesos_unicos_ocid": 19956,
+    "ocid_repetidos_entre_meses_descartados": 0,
+    "accion": "una fila por ocid desde el compiledRelease; si se repite entre meses, gana el más reciente"
+  },
+  "V2_monto": {
+    "faltante_o_cero": 4840,
+    "recuperado_de_adjudicacion": 110,
+    "recuperado_de_items": 102,
+    "sin_monto_conservado_con_advertencia": 4628,
+    "tasa_recuperacion": 0.0438,
+    "en_otra_moneda_convertidos_a_PEN": 265,
+    "accion": "recuperar de adjudicación o ítems; si no, NaN con advertencia (fuera de las sumas)"
+  },
+  "V3_descripcion": {
+    "sin_descripcion": 0,
+    "recuperadas": 0,
+    "sin_texto_conservadas_con_advertencia": 0,
+    "accion": "usar ítems, proyecto o título; si nada, advertencia (no se indexa)"
+  },
+  "V4_territorio": {
+    "campo_region_con_provincia_no_departamento": 11035,
+    "valores_distintos_en_region": 196,
+    "departamento_vacio_o_invalido": 0,
+    "recuperados_por_provincia": 0,
+    "provincia_y_departamento_inconsistentes": 0,
+    "sin_ubicar": 0,
+    "accion": "departamento desde `department` (25 + Callao); `region` es provincia; recuperar por tabla provincia->departamento construida con los propios datos"
+  },
+  "V5_codificacion": {
+    "nombres_con_variantes_de_tilde_o_espacios": {
+      "comprador": 0,
+      "dep_raw": 0,
+      "region_raw": 0,
+      "localidad_raw": 0
+    },
+    "textos_con_mojibake": 2,
+    "accion": "forma canónica sin tildes y en mayúsculas para agrupar; se muestra el nombre con tildes"
+  }
+}

@@ -1,0 +1,18 @@
+timestamp_utc,step,item,requests,bytes,seconds,status
+2026-11-04T00:34:44+00:00,bulk,2026-08,2,10321916,11.66,"sha MISMATCH (published b5c7051e3dbd, got 3acee57df8e0)"
+2026-11-04T00:34:56+00:00,bulk,2026-09,2,8869572,12.41,"sha MISMATCH (published bf3ae87736c4, got 6b3b0592ca46)"
+2026-11-04T00:35:03+00:00,bulk,2026-10,2,6034804,7.04,"sha MISMATCH (published 0af30c4c5184, got 6cfece5725d9)"
+2026-11-04T00:35:24+00:00,bulk,2026-08,2,10321916,20.13,"sha MISMATCH (published b5c7051e3dbd, got 3acee57df8e0)"
+2026-11-04T00:35:34+00:00,bulk,2026-09,2,8869572,10.56,"sha MISMATCH (published bf3ae87736c4, got 6b3b0592ca46)"
+2026-11-04T00:35:41+00:00,bulk,2026-10,2,6034804,6.89,"sha MISMATCH (published 0af30c4c5184, got 6cfece5725d9)"
+2026-11-04T00:36:07+00:00,bulk,2026-08,1,0,0.65,"skipped: already downloaded, sha ok"
+2026-11-04T00:36:08+00:00,bulk,2026-09,1,0,0.31,"skipped: already downloaded, sha ok"
+2026-11-04T00:36:08+00:00,bulk,2026-10,1,0,0.25,"skipped: already downloaded, sha ok"
+2026-11-04T00:38:56+00:00,bulk,2026-08,1,0,0.88,"skipped: already downloaded, sha ok"
+2026-11-04T00:38:56+00:00,bulk,2026-09,1,0,0.33,"skipped: already downloaded, sha ok"
+2026-11-04T00:38:56+00:00,bulk,2026-10,1,0,0.26,"skipped: already downloaded, sha ok"
+2026-11-04T00:38:57+00:00,api,releases page 1,1,108095,0.78,ok
+2026-11-04T00:38:59+00:00,api,releases page 2,1,105537,0.79,ok
+2026-11-04T00:39:01+00:00,bulk,2026-08,1,0,0.65,"skipped: already downloaded, sha ok"
+2026-11-04T00:39:01+00:00,bulk,2026-09,1,0,0.31,"skipped: already downloaded, sha ok"
+2026-11-04T00:39:01+00:00,bulk,2026-10,1,0,0.24,"skipped: already downloaded, sha ok"

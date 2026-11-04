@@ -1,0 +1,23 @@
+# Task 2 - Procurement Radar. Every path, URL, rule, threshold and message lives here.
+paths:
+  raw: data/raw               # bulk ZIPs as downloaded, never modified
+  api_cache: data/raw/api     # cached API responses (one file per request)
+  processed: data/processed   # one row per contracting process
+  outputs: data/outputs       # tables the dashboard reads
+  index: data/index           # vector index of process descriptions
+  logs: logs
+  reports: reports
+
+oece:
+  base_url: https://contratacionesabiertas.oece.gob.pe/api/v1
+  source: seace_v3
+  format: json                # OCDS releases; csv/xlsx also published
+  months: ["2026-08", "2026-09", "2026-10"]
+  user_agent: "Mozilla/5.0 (course project, Universidad del Pacifico)"
+  timeout_s: 120
+  throttle_s: 1.0             # pause between API requests
+  retries: 4
+  backoff_s: 5
+
+territory:
+  departments_geojson_url: https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson

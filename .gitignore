@@ -4,3 +4,5 @@ __pycache__/
 .pytest_cache/
 .vscode/
 tarea1_rag_normativo/data/index/
+tarea2_radar/data/raw/*.zip
+tarea2_radar/data/index/
