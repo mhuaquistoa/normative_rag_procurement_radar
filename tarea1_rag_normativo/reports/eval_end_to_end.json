@@ -1,0 +1,13 @@
+{
+ "preguntas": 20,
+ "decisiones_correctas": 19,
+ "en_dominio_respondidas": 14,
+ "en_dominio_abstenidas_mal": 1,
+ "fuera_abstenidas_bien": 5,
+ "fuera_respondidas_mal": 0,
+ "abstenciones_por_umbral_sin_llm": 2,
+ "citas_con_pagina_esperada": "14/14",
+ "costo_total_usd": 0.005703,
+ "costo_medio_por_pregunta_con_llm": 0.000317,
+ "errores": 0
+}

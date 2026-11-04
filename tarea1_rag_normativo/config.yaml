@@ -89,6 +89,55 @@ pricing:   # USD per 1M tokens. Verify again before reporting costs.
     flat: {input: 0.15}
     note: "Paid tier price. The free tier is free of charge but its data may be used by Google."
 
+engine:
+  top_k: 5                  # fragments retrieved and sent as context
+  threshold: 0.82           # best-fragment similarity below this -> abstain without calling the LLM
+                            # calibrated on the evaluation set (reports/threshold_sweep_local_large_medium_ctx.csv)
+
+llm:
+  provider: deepseek
+  model: deepseek-flash
+  base_url: https://api.deepseek.com
+  api_key_env: DEEPSEEK_API_KEY
+  thinking: disabled        # no reasoning trace: faster and cheaper; the task is grounded rewriting
+  temperature: 0.0
+  max_tokens: 700
+  timeout_s: 60
+
+prompts:
+  system: |
+    Eres un asistente sobre contrataciones públicas del Perú para micro y pequeñas empresas.
+    Respondes SOLO con lo que dicen los fragmentos numerados [F1], [F2]... que te doy. No uses
+    conocimiento propio, no completes con normas que no estén en los fragmentos y no inventes cifras.
+    Reglas:
+    1. Cada afirmación lleva al final la cita del fragmento que la respalda, por ejemplo [F2].
+    2. Si los fragmentos no contienen la respuesta, abstente con motivo "fuera_de_corpus".
+    3. Si la pregunta pide un detalle que según los fragmentos "establece el reglamento" y ese detalle
+       no está en los fragmentos, abstente con motivo "reglamento".
+    4. Si usas un fragmento del Reglamento modificado por el DS 001-2026-EF, dilo ("según el Reglamento,
+       modificado por el DS 001-2026-EF") y no lo presentes como si fuera la Ley.
+    5. Si un fragmento dice que un numeral fue derogado o modificado, menciónalo.
+    6. Escribe en español claro, para alguien que no es abogado, en 2 a 6 oraciones.
+    Responde solo en json con esta forma:
+    {"abstener": false, "motivo": null, "respuesta": "texto con citas [F1]", "citas": ["F1"]}
+    o, si te abstienes: {"abstener": true, "motivo": "fuera_de_corpus", "respuesta": "", "citas": []}
+  user: |
+    Pregunta: {pregunta}
+
+    Fragmentos:
+    {contexto}
+
+messages:
+  empty_question: "Escribe una pregunta."
+  abstain_threshold: "No encontré en la Ley 32069 ni en el DS 001-2026-EF un texto suficientemente relacionado con tu pregunta, así que prefiero no responder."
+  abstain_out_of_corpus: "Los textos que tengo indexados (Ley 32069 y DS 001-2026-EF) no responden esta pregunta, así que no voy a improvisar una respuesta."
+  abstain_reglamento: "Esta pregunta la responde el Reglamento de la Ley 32069, que no está en mi corpus: solo tengo los artículos del Reglamento que modificó el DS 001-2026-EF. Consulta el Reglamento vigente."
+  abstain_no_citations: "El modelo produjo una respuesta sin citar ningún fragmento; por seguridad no la muestro."
+  retrieval_error: "No se pudo consultar el índice. ¿Ejecutaste build_index.py?"
+  llm_error: "Error al llamar al modelo de lenguaje"
+  version_ley: "Basado en el texto de la Ley N.° 32069 con modificaciones hasta el 19-07-2026."
+  version_reglamento_ds: "Incluye artículos del Reglamento en la redacción que les dio el DS 001-2026-EF (8-1-2026); el resto del Reglamento no está en el corpus, así que esta respuesta puede no ser la regla completa."
+
 download:
   user_agent: "Mozilla/5.0 (course project; contact via GitHub)"
   timeout_s: 60
