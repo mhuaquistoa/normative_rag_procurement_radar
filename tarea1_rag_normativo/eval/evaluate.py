@@ -7,7 +7,8 @@ every change, and every chunking/threshold/embedder choice is made with the same
                       in-domain questions wrongly abstained and out-of-domain questions correctly
                       abstained. The engine abstains before calling the LLM when top-1 < t.
 
-    python eval/evaluate.py                          # active embedder, every chunking config
+    python eval/evaluate.py                          # active embedder and chunking config
+    python eval/evaluate.py --chunking all           # every chunking config (each index must be built)
     python eval/evaluate.py --embedder api --chunking medium
 Output: reports/eval_<embedder>_<chunking>.json, reports/eval_summary.csv, reports/threshold_sweep_<..>.csv
 """
@@ -74,7 +75,7 @@ def evaluate(embedder_key: str, chunking: str, k_max: int = 10) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--embedder", default=cfg()["embeddings"]["active"])
-    ap.add_argument("--chunking", default="all")
+    ap.add_argument("--chunking", default=cfg()["chunking"]["active"], help="a config name, or 'all'")
     a = ap.parse_args()
     configs = list(cfg()["chunking"]["configs"]) if a.chunking == "all" else [a.chunking]
     summary_file = path("reports") / "eval_summary.csv"

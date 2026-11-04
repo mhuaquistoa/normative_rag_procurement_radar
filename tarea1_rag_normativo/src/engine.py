@@ -72,6 +72,8 @@ def responder(pregunta: str, umbral: float = None, k: int = None) -> dict:
         return _result(pregunta, error=m["empty_question"], umbral=umbral)
     try:
         frags = search(pregunta, k)
+        if not frags:
+            raise LookupError("the index is empty")
     except Exception as ex:  # index missing or embeddings failure: an error, not an answer
         return _result(pregunta, error=f"{m['retrieval_error']} ({type(ex).__name__}: {ex})", umbral=umbral,
                        latencia_s=round(time.perf_counter() - t0, 3))
