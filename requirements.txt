@@ -10,3 +10,4 @@ chromadb
 google-genai
 openai
 numpy
+pyarrow
