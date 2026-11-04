@@ -41,7 +41,8 @@ def cost_usd(model: str, tokens_in: int, tokens_out: int, tokens_cached: int = 0
 
 
 def log_call(kind: str, model: str, tokens_in: int, tokens_out: int, latency_s: float, ok: bool,
-             note: str = "", tokens_cached: int = 0, when: datetime = None) -> float:
+             note: str = "", tokens_cached: int = 0, when: datetime = None) -> tuple:
+    """Appends the call to logs/calls.csv and returns (cost_usd, price_window) as charged."""
     when = when or datetime.now(timezone.utc)
     usd, window = cost_usd(model, tokens_in, tokens_out, tokens_cached, when) if ok else (0.0, "n/a")
     f = path("logs") / "calls.csv"
@@ -53,4 +54,4 @@ def log_call(kind: str, model: str, tokens_in: int, tokens_out: int, latency_s: 
         w.writerow({"timestamp_utc": when.isoformat(timespec="seconds"), "kind": kind, "model": model,
                     "tokens_in": tokens_in, "tokens_cached": tokens_cached, "tokens_out": tokens_out,
                     "latency_s": round(latency_s, 3), "price_window": window, "cost_usd": usd, "ok": ok, "note": note})
-    return usd
+    return usd, window
